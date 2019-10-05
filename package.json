@@ -4,7 +4,9 @@
   "description": "Inventory manager for \"the chaos\"",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ignore-path .gitignore . --max-warnings 0",
+    "lintfix": "eslint --ignore-path .gitignore --fix ."
   },
   "repository": {
     "type": "git",
@@ -21,5 +23,9 @@
     "express": "^4.17.1",
     "mongoose": "^5.7.3",
     "passport": "^0.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-plugin-node": "^10.0.0"
   }
 }
