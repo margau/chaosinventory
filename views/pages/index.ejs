@@ -1,0 +1,16 @@
+<% include ../parts/head %>
+
+<body>
+  <div class="container">
+    <h1>
+      <%= instance %>
+    </h1>
+    <h2>Chaosinventory - keep an eye also on your chaos!</h2>
+    <% if (!user) { %>
+    <p>Welcome to this chaosinventory-instance! Please <a href="/login">log in</a>.</p>
+    <% } else { %>
+    <p>Hello,
+      <%= user.username %>. <a href="/logout">Logout</a>.</p>
+    <% } %>
+  </div>
+</body>
