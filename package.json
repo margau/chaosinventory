@@ -1,0 +1,25 @@
+{
+  "name": "chaosinventory",
+  "version": "0.0.1",
+  "description": "Inventory manager for \"the chaos\"",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/margau/chaosinventory.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/margau/chaosinventory/issues"
+  },
+  "homepage": "https://github.com/margau/chaosinventory#readme",
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.3",
+    "passport": "^0.4.0"
+  }
+}
