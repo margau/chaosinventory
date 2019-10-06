@@ -8,6 +8,7 @@ const port = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const flash = require('connect-flash');
 // Passport modules
 const passport = require('passport');
@@ -81,7 +82,8 @@ app.use(cookieParser());
 app.use(session({
   secret: 'secret',
   saveUninitialized: true,
-  resave: true
+  resave: true,
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
 // Templating
@@ -94,8 +96,12 @@ app.use(passport.session());
 // Flash
 app.use(flash());
 
-// Bootstrap
+// Frontend JS Libs
 app.use("/bootstrap", express.static(path.join(__dirname, '/node_modules/bootstrap/dist')));
+app.use("/bootstrap-table", express.static(path.join(__dirname, '/node_modules/bootstrap-table/dist')));
+app.use("/jquery", express.static(path.join(__dirname, '/node_modules/jquery/dist')));
+app.use("/tableexport", express.static(path.join(__dirname, '/node_modules/tableexport.jquery.plugin')));
+app.use("/popper.js", express.static(path.join(__dirname, '/node_modules/popper.js/dist/umd')));
 
 // Locals
 app.locals.instance = process.env.URL;
@@ -111,6 +117,12 @@ app.get('/', (req, res) => {
 // External Routes
 const authRoutes = require('./routes/auth');
 app.use(authRoutes);
+
+const restListRoutes = require('./routes/restList');
+app.use('/api',restListRoutes);
+
+const itemRoutes = require('./routes/item');
+app.use('/i',itemRoutes);
 
 // Express listening
 app.listen(port, () => console.log('App listening on port ' + port));

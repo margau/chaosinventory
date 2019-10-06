@@ -1,0 +1,13 @@
+<% include ../parts/head %>
+
+<body>
+  <div class="container">
+    <h1><%= item.name %></h1>
+    <h3>Owner: <b><%= item.owner.publicName %></b></h3>
+    <p>If you have found this item, the owner want's you to know:</p>
+    <p><strong><%= item.owner.message %></strong></p>
+    <p>Thanks!</p>
+    <hr>
+    <p>If you want to manage this item, please <a href="/login">log in</a></p>
+  </div>
+</body>

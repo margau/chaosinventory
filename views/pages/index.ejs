@@ -11,6 +11,61 @@
     <% } else { %>
     <p>Hello,
       <%= user.username %>. <a href="/logout">Logout</a>.</p>
+    <hr>
+    <h3>Available Items:</h3>
+    <script>
+      function urlLinkFormat(value, row, index) {
+        return "<a href='https://<%= instance %>/i/" + value + "' target='_blank'>Link</a>";
+      }
+      function urlFormat(value, row, index) {
+        return "https://<%= instance %>/i/" + value;
+      }
+      function printFormat(value, row, index) {
+        if (value) {
+          return "&#x2714;";
+        }
+        return "&#x274C;";
+      }
+    </script>
+    <table id="table" data-toggle="table" class="display table table-bordered" data-url="/api/item" data-pagination="true" data-search="true" data-show-export="true" data-click-to-select="true">
+      <thead>
+        <tr>
+          <th data-sortable="true" data-field="name">Name</th>
+          <th data-field="description">Description</th>
+          <th data-sortable="true" data-field="owner.name">Owner</th>
+          <th data-sortable="true" data-field="created">Created</th>
+          <th data-formatter="urlLinkFormat" data-field="_id">Direct Link</th>
+          <th data-visible="false" data-formatter="urlFormat" data-force-export="true" data-field="_id">URL</th>
+          <th data-visible="false" data-force-export="true" data-field="owner.publicName">Public Owner Name</th>
+          <th data-formatter="printFormat" data-title-tooltip="Already printed" data-field="print">&#x1f5a8;</th>
+        </tr>
+      </thead>
+    </table>
+    <script type="text/javascript">
+      var $table = $('#table')
+
+    $(function() {
+      $table.bootstrapTable('refreshOptions', {
+        exportTypes: ['csv'],
+        exportDataType: 'all',
+        exportOptions: {
+          ignoreColumn: ['print', 4]
+        }
+      });
+    });
+    </script>
+    <hr>
+    <h3>Available Owners:</h3>
+    <table data-toggle="table" class="display table table-bordered" data-url="/api/owner">
+      <thead>
+        <tr>
+          <th data-field="name">Name</th>
+          <th data-field="publicName">Public Name</th>
+          <th data-field="message">Message to finder</th>
+          <th data-field="created">Created</th>
+        </tr>
+      </thead>
+    </table>
     <% } %>
   </div>
 </body>
