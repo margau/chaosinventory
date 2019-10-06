@@ -17,9 +17,11 @@
       function urlLinkFormat(value, row, index) {
         return "<a href='https://<%= instance %>/i/" + value + "' target='_blank'>Link</a>";
       }
+
       function urlFormat(value, row, index) {
         return "https://<%= instance %>/i/" + value;
       }
+
       function printFormat(value, row, index) {
         if (value) {
           return "&#x2714;";
@@ -30,6 +32,7 @@
     <table id="table" data-sort-name="created" data-sort-order="desc" data-toggle="table" class="display table table-bordered" data-url="/api/item" data-pagination="true" data-search="true" data-show-export="true" data-click-to-select="true">
       <thead>
         <tr>
+          <th data-field="state" data-checkbox="true"></th>
           <th data-sortable="true" data-field="name">Name</th>
           <th data-field="description">Description</th>
           <th data-sortable="true" data-field="owner.name">Owner</th>
@@ -44,15 +47,21 @@
     <script type="text/javascript">
       var $table = $('#table')
 
-    $(function() {
-      $table.bootstrapTable('refreshOptions', {
-        exportTypes: ['csv'],
-        exportDataType: 'all',
-        exportOptions: {
-          ignoreColumn: ['print', 4]
-        }
+      $(function() {
+        $table.bootstrapTable('refreshOptions', {
+          exportTypes: ['csv'],
+          exportDataType: 'selected',
+          exportOptions: {
+            ignoreColumn: ['print', 4]
+          }
+        });
+        $table.on("export-saved.bs.table", function(e, exported) {
+          exported.map((d) => {
+            $.ajax('/api/item/'+d._id+'/print');
+            // ToDo: Refresh row
+          });
+        });
       });
-    });
     </script>
     <hr>
     <h3>Available Owners:</h3>
