@@ -46,5 +46,16 @@ router.get('/item', (req, res) => {
     console.log(err);
   });
 });
+// Item
+router.get('/item/:itemId/print', (req, res) => {
+  Item.updateOne({ _id: req.params.itemId }, { $set: { print: true } }).then((docs) => {
+    res.json(docs);
+  }).catch((err) => {
+    res.status(500).json({
+      error: err
+    });
+    console.log(err);
+  });
+});
 
 module.exports = router;

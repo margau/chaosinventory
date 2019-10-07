@@ -29,7 +29,7 @@
         return "&#x274C;";
       }
     </script>
-    <table id="table" data-sort-name="created" data-sort-order="desc" data-toggle="table" class="display table table-bordered" data-url="/api/item" data-pagination="true" data-search="true" data-show-export="true" data-click-to-select="true">
+    <table id="table" data-id-field="_id" data-sort-name="created" data-sort-order="desc" data-toggle="table" class="display table table-bordered" data-url="/api/item" data-pagination="true" data-search="true" data-show-export="true" data-click-to-select="true">
       <thead>
         <tr>
           <th data-field="state" data-checkbox="true"></th>
@@ -40,7 +40,7 @@
           <th data-formatter="urlLinkFormat" data-field="_id">Direct Link</th>
           <th data-visible="false" data-formatter="urlFormat" data-force-export="true" data-field="_id">URL</th>
           <th data-visible="false" data-force-export="true" data-field="owner.publicName">Public Owner Name</th>
-          <th data-formatter="printFormat" data-title-tooltip="Already printed" data-field="print">&#x1f5a8;</th>
+          <th data-sortable="true" data-formatter="printFormat" data-title-tooltip="Already printed" data-field="print">&#x1f5a8;</th>
         </tr>
       </thead>
     </table>
@@ -56,9 +56,10 @@
           }
         });
         $table.on("export-saved.bs.table", function(e, exported) {
-          exported.map((d) => {
-            $.ajax('/api/item/'+d._id+'/print');
-            // ToDo: Refresh row
+          Promise.all(exported.map((d) => {
+            return $.ajax('/api/item/'+d._id+'/print');
+          })).then(() => {
+            $table.bootstrapTable('refresh', {silent: true});
           });
         });
       });
