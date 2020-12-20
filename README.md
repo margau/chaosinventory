@@ -1,7 +1,7 @@
 # chaosinventory
 Organize an inventory in the chaos? Let's try it.
 
-## This project is currently highly experimental, and tends to spontaneous self-ignition!
+## This project is on hold. Development moved to https://github.com/chaosinventory
 
 ## What is planned?
 - Generate labels with QR-Codes for your stuff
